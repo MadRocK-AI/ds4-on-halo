@@ -1,6 +1,6 @@
 {
   "scope": "Real local Git and CPU/dry-run setup verification. Tiny synthetic input is not a model/GPU qualification.",
-  "engine_commit": "ad84a09bc1eade35be39d0de9f2bcd09ec7dd803",
+  "engine_commit": "34ec09459cc64c1f565dbb2e49744ce7d852d9de",
   "checks": [
     {
       "check": "actual pinned bootstrap checkout",
@@ -57,36 +57,115 @@
   ],
   "executed": [
     {
-      "check": "parser unit suite",
+      "check": "parser unit suite at updated engine pin",
       "status": "PASS",
       "cases": 12,
       "command": "python -m unittest discover -s tests -v",
-      "log_sha256": "532e7fa47b91cf46ea2437aa2ca95c898aa33b267762c1eb2631c6b1847ec7ad",
-      "scope": "tiny synthetic parser files, no model/GPU claim"
+      "log_sha256": "600a7816bbabc01720fc4ad4e3d5930c5d80518b9c14879b87747ea7b6467bbf",
+      "scope": "synthetic parser fixtures; no model/GPU claim"
     },
     {
-      "check": "normal companion CPU build on actual pinned clone",
+      "check": "updated pinned engine independent bootstrap and normal CPU build",
       "status": "PASS",
-      "command": "python3 scripts/halo.py build --engine <actual pinned bootstrap clone> --backend cpu --jobs 2",
-      "log_sha256": "448ce8c4b94a231e5008b8480b2abdf51c8aa8ed572949b76b507f4c3f6225db"
-    },
-    {
-      "check": "case preparation",
-      "status": "PASS",
-      "cases": 10,
-      "command": "python scripts/prepare_cases.py --template config/example.toml --destination <new output>",
-      "log_sha256": "d29fad90719518d420246f07bc2190413198292fc227f2e23a292efc12a5bce0"
-    },
-    {
-      "check": "normal companion CPU build on historical core with benchmark-only instrumentation",
-      "status": "PASS",
-      "command": "python3 scripts/halo.py build --engine <actual historical baseline clone> --baseline --backend cpu --jobs 2",
-      "log_sha256": "93d0ff2cde3693c8952b094a94ecd055889fddc59fcfa14d5d85fa3ba7990c8b",
-      "scope": "actual independent baseline checkout; no model/GPU execution"
+      "command": "python3 scripts/halo.py build --engine <new pinned clone> --backend cpu --jobs 2",
+      "log_sha256": "94255e049de84d1606532825b831c253c7de45da3d8a47ac1e4924cd5431b6e4",
+      "binary_sha256": "7a438bb7e2a9ddcea337f5e63b949e1cf8dd2e6ec955373378ebf56da3378ba7"
     }
   ],
   "pending": [
     "complete installed ROCm SDK executable link",
     "model/GPU numerical and performance qualification"
-  ]
+  ],
+  "historical_verification": {
+    "scope": "Real local Git and CPU/dry-run setup verification. Tiny synthetic input is not a model/GPU qualification.",
+    "engine_commit": "ad84a09bc1eade35be39d0de9f2bcd09ec7dd803",
+    "checks": [
+      {
+        "check": "actual pinned bootstrap checkout",
+        "status": "PASS"
+      },
+      {
+        "check": "actual historical core plus benchmark-only instrumentation",
+        "status": "PASS"
+      },
+      {
+        "check": "wrong engine revision",
+        "status": "PASS_REJECTION"
+      },
+      {
+        "check": "dirty tracked source",
+        "status": "PASS_REJECTION"
+      },
+      {
+        "check": "untracked source files",
+        "status": "PASS_REJECTION"
+      },
+      {
+        "check": "baseline instrumentation hash mismatch",
+        "status": "PASS_REJECTION"
+      },
+      {
+        "check": "both clones: independent full history, no alternates/remotes",
+        "status": "PASS"
+      },
+      {
+        "check": "dry-run: native arm, inherited flags cleared, explicit payloads and no process/output",
+        "status": "PASS_UNIT"
+      },
+      {
+        "check": "LD_PRELOAD refused before any execution",
+        "status": "PASS_REJECTION"
+      },
+      {
+        "check": "controlled arm override refused",
+        "status": "PASS_REJECTION"
+      },
+      {
+        "check": "existing destination refused",
+        "status": "PASS_REJECTION"
+      },
+      {
+        "check": "bootstrap still clean and pinned after rejection tests",
+        "status": "PASS"
+      },
+      {
+        "check": "baseline still exactly benchmark-only after rejection tests",
+        "status": "PASS"
+      }
+    ],
+    "executed": [
+      {
+        "check": "parser unit suite",
+        "status": "PASS",
+        "cases": 12,
+        "command": "python -m unittest discover -s tests -v",
+        "log_sha256": "532e7fa47b91cf46ea2437aa2ca95c898aa33b267762c1eb2631c6b1847ec7ad",
+        "scope": "tiny synthetic parser files, no model/GPU claim"
+      },
+      {
+        "check": "normal companion CPU build on actual pinned clone",
+        "status": "PASS",
+        "command": "python3 scripts/halo.py build --engine <actual pinned bootstrap clone> --backend cpu --jobs 2",
+        "log_sha256": "448ce8c4b94a231e5008b8480b2abdf51c8aa8ed572949b76b507f4c3f6225db"
+      },
+      {
+        "check": "case preparation",
+        "status": "PASS",
+        "cases": 10,
+        "command": "python scripts/prepare_cases.py --template config/example.toml --destination <new output>",
+        "log_sha256": "d29fad90719518d420246f07bc2190413198292fc227f2e23a292efc12a5bce0"
+      },
+      {
+        "check": "normal companion CPU build on historical core with benchmark-only instrumentation",
+        "status": "PASS",
+        "command": "python3 scripts/halo.py build --engine <actual historical baseline clone> --baseline --backend cpu --jobs 2",
+        "log_sha256": "93d0ff2cde3693c8952b094a94ecd055889fddc59fcfa14d5d85fa3ba7990c8b",
+        "scope": "actual independent baseline checkout; no model/GPU execution"
+      }
+    ],
+    "pending": [
+      "complete installed ROCm SDK executable link",
+      "model/GPU numerical and performance qualification"
+    ]
+  }
 }
