@@ -1,10 +1,13 @@
-# ds4-on-halo (local companion)
+# ds4-on-halo
 
-A small local setup/configuration/benchmark companion for the exact engine commit in `engine.json`. It consumes a user-supplied model and existing Linux ROCm toolchain, and uses upstream `ds4-bench`. This provisional local name has no public repository URL. Historical tests do not qualify the cleaned integrated engine.
+A small local setup/configuration/benchmark companion for the exact engine commit in `engine.json`. It consumes a user-supplied model and existing Linux ROCm toolchain, and uses upstream `ds4-bench`. Initial publication is private under [msala9/ds4-on-halo](https://github.com/msala9/ds4-on-halo); the engine is [msala9/ds4](https://github.com/msala9/ds4). The planned official destination is the madrock organization. Normal WSL build/link passed for the engine implementation, and the owner accepted the documented historical numerical/performance evidence for this preparation. No new GPU run is claimed.
 
 Requirements: Python3.11+, Git, make/C compiler; a complete existing ROCm SDK for GPU builds. The engine preserves upstream history and licenses. The companion installs no packages, downloads no model, changes no machine settings and starts no service.
 
+Clone the private engine repository with your existing GitHub access, then pass its local directory as `--source`. The companion checks out its exact pin.
+
 ```sh
+git clone https://github.com/msala9/ds4.git /path/to/local/release/ds4
 python3 scripts/halo.py bootstrap --source /path/to/local/release/ds4 --destination /path/to/new/engine
 python3 scripts/halo.py build --engine /path/to/new/engine --backend rocm --hipcc /path/to/existing/hipcc --jobs 2
 ```
@@ -31,6 +34,6 @@ python3 scripts/compare_payloads.py /path/to/new/qual-base /path/to/new/qual-hal
 
 The baseline checks out the exact upstream core and copies only manifest-bound `ds4_bench.c` readback/timing instrumentation. Its verified modification is intentional; no Halo backend code is copied. The comparison requires matching source/model/prompt/config identity, complete payload inventory and exact decode count. It checks byte equality and, for intermediate frontiers, prefill-versus-restored equality within both arms. `--require-restore` requires serialized snapshot restoration at every intermediate frontier, and refuses fresh-only or replay cases. A passing comparison describes tested cases only.
 
-See the engine's `docs/HALO_QUALIFICATION.md` for the bounded qualification sequence and remaining gates. Save ordinary timing runs separately without `--payloads/--logits`, in alternating arms; precision CSV is supplementary to the original upstream official CSV. Loading is outside prefill, and process success is recorded as `PASS_PROCESS`, never numerical qualification. Do not publish historical performance as performance of the new engine.
+See the engine's `docs/HALO_QUALIFICATION.md` for the retained GPU reproduction protocol, and `docs/HALO_RELEASE.md` for the current private-release acceptance and build evidence. Save ordinary timing runs separately without `--payloads/--logits`, in alternating arms; precision CSV is supplementary to the original upstream official CSV. Loading is outside prefill, and process success is recorded as `PASS_PROCESS`, never numerical qualification. Do not publish historical performance as performance of the new engine.
 
 Run `python3 -m unittest discover -s tests -v` for the parser contract checks. [Offline verification](verification.json) records the real bootstrap/control checks and CPU build; synthetic fixture passes are not model/GPU correctness evidence.
