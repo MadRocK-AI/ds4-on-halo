@@ -19,13 +19,13 @@ The pinned setup and verification companion for [the DS4 Strix Halo prefill fork
 
 **Full FP32 logits, complete serialized state and token IDs are bitwise identical to the reference in the verified cases.** Model weights and quantization are preserved. Coverage includes fresh32K/64K/128K prompts, 223 incremental payload comparisons and 31 snapshot restorations. [Verification evidence](https://github.com/msala9/ds4/blob/main/docs/HALO_EVIDENCE.md).
 
-Both repositories are private under msala9; the planned official home is madrock. The companion consumes an existing Linux ROCm toolchain and a user-supplied model.
+The companion consumes an existing Linux ROCm toolchain and a user-supplied model.
 
 ## Setup and build
 
 Requirements: Python3.11+, Git, make/C compiler; a complete existing ROCm SDK for GPU builds. The engine preserves upstream history and licenses. The companion installs no packages, downloads no model, changes no machine settings and starts no service.
 
-Clone the private engine repository with your existing GitHub access, then pass its local directory as `--source`. The companion checks out its exact pin.
+Clone the engine repository, then pass its local directory as `--source`. The companion checks out its exact pin.
 
 ```sh
 git clone https://github.com/msala9/ds4-on-halo.git
