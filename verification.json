@@ -1,5 +1,5 @@
 {
-  "scope": "Real local Git and CPU/dry-run setup verification. Tiny synthetic input is not a model/GPU qualification.",
+  "scope": "Local setup, source/build checks and installer lifecycle; no new model/GPU numerical or performance measurement",
   "engine_commit": "34ec09459cc64c1f565dbb2e49744ce7d852d9de",
   "checks": [
     {
@@ -73,8 +73,7 @@
     }
   ],
   "pending": [
-    "complete installed ROCm SDK executable link",
-    "model/GPU numerical and performance qualification"
+    "Live model/GPU execution through the new launcher is not part of the WSL packaging checks"
   ],
   "historical_verification": {
     "scope": "Real local Git and CPU/dry-run setup verification. Tiny synthetic input is not a model/GPU qualification.",
@@ -167,5 +166,101 @@
       "complete installed ROCm SDK executable link",
       "model/GPU numerical and performance qualification"
     ]
+  },
+  "distribution": {
+    "version": "0.1.0-rc.1",
+    "engine_commit": "7141e0e4ec88de534fd25364f163f10de5bf6580",
+    "package_identity": "b4f3bd2a81a56b0f4bcb562433ce893be785a93938b60b7bc9688dd1718a0b09",
+    "linux_unit_tests": {
+      "status": "PASS",
+      "cases": 24,
+      "command": "python3 -m unittest discover -s tests -v",
+      "scope": "12 payload contracts and 12 distribution contracts; small synthetic files, no inference"
+    },
+    "actual_cpu_lifecycle": {
+      "status": "PASS",
+      "steps": [
+        {
+          "name": "cpu-install",
+          "status": "PASS",
+          "returncode": 0
+        },
+        {
+          "name": "cpu-status",
+          "status": "PASS",
+          "returncode": 0
+        },
+        {
+          "name": "cpu-update",
+          "status": "PASS",
+          "returncode": 0
+        },
+        {
+          "name": "cpu-updated-status",
+          "status": "PASS",
+          "returncode": 0
+        },
+        {
+          "name": "cpu-rollback",
+          "status": "PASS",
+          "returncode": 0
+        },
+        {
+          "name": "cpu-rolled-back-status",
+          "status": "PASS",
+          "returncode": 0
+        },
+        {
+          "name": "cpu-inference-refused",
+          "status": "PASS",
+          "returncode": 1
+        },
+        {
+          "name": "cpu-reinstall",
+          "status": "PASS",
+          "returncode": 0
+        }
+      ],
+      "elapsed_seconds": 186.62,
+      "test_update_version": "0.1.0-rc.2 fixture only"
+    },
+    "actual_rocm_install": {
+      "status": "PASS_ROCM_DISTRIBUTION_INSTALL",
+      "elapsed_seconds": 490.12,
+      "targets": 5,
+      "relocation_checks": 5,
+      "warnings": 0,
+      "compiler": "AMD clang 23 / HIP 7.15",
+      "executables": {
+        "ds4": {
+          "bytes": 36985712,
+          "sha256": "ec39cfa7f1f5ed3fc66ccc4399e31bccc9d92be7facdf81fba1940659eef2891"
+        },
+        "ds4-server": {
+          "bytes": 38251960,
+          "sha256": "db92f5a0d5a4c649afc4635be24fbd9871d80dcca8088fb8983aba7ce8b81e38"
+        },
+        "ds4-bench": {
+          "bytes": 36718368,
+          "sha256": "7e72d7e169d3fff0a71a886a4add018a4fa3c4e40f826e60418eb7cfb75abe69"
+        },
+        "ds4-eval": {
+          "bytes": 37075840,
+          "sha256": "975447f3513c07d170c0f447f86164485dc9dd5e4983b02a63d0c0887bab1258"
+        },
+        "ds4-agent": {
+          "bytes": 38308728,
+          "sha256": "41ba0a4958e8ab78c6ea137dfacb815f187ef21383c256e95025360a9788886f"
+        }
+      }
+    },
+    "model_execution": false,
+    "GPU_execution": false,
+    "source_identities_unchanged": 65,
+    "local_evidence_bindings": {
+      "lifecycle-result.json": "ddcf5807d9c4821f175542fd34dd5eb55184ed0d85332ae0ea1890082b07d655",
+      "rocm-distribution-result.json": "12fe8891373bececd62fca9ed078b9a3ace6ba3c7a604822dc288e61c3adf80a",
+      "rocm-install.log": "644f835b22f8ea236d1021c53b338d831a27620c92f6176a38dc7a7216bba417"
+    }
   }
 }

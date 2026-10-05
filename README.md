@@ -1,6 +1,30 @@
 # ds4-on-halo
 
-The pinned setup and verification companion for [the DS4 Strix Halo prefill fork](https://github.com/msala9/ds4). The engine adds routed MoE, attention, projection and resident-key indexer paths for single-device AMD `gfx1151`; this repository handles exact source-pin bootstrap, build identity, benchmark configuration and full bitwise payload comparison.
+The installer, launcher and verification companion for [the DS4 Strix Halo prefill fork](https://github.com/msala9/ds4). The engine adds routed MoE, attention, projection and resident-key indexer paths for single-device AMD `gfx1151`; this repository handles setup, exact source pins, build identity and verification.
+
+## Quick start
+
+On a **single-device Strix Halo gfx1151 with 128 GB memory**, use x86_64 Linux, Python 3.11+, Git, make, `rocminfo` and the [documented existing ROCm SDK](https://github.com/msala9/ds4/blob/main/docs/HALO_RELEASE.md#build-dependencies), including rocWMMA 2.2.1. Supply the existing DeepSeek V4 Flash 0731 IQ2 GGUF; the installer verifies its complete SHA256.
+
+```sh
+git clone https://github.com/msala9/ds4-on-halo.git
+cd ds4-on-halo
+bash install.sh --model /absolute/path/to/the/model.gguf
+~/.local/bin/ds4-halo serve
+```
+
+Installation checks the host and SDK, clones the exact engine pin, builds the engine and installs the launcher. It uses per-user directories, downloads source only and leaves packages, drivers and model weights under your control. The foreground server defaults to **127.0.0.1:8000**, **32K context** and **2K chunks**, with the Halo paths enabled.
+
+```sh
+ds4-halo doctor
+ds4-halo status --verify
+ds4-halo serve --context 65536
+ds4-halo serve --context 131072 --dry-run
+ds4-halo update
+ds4-halo rollback
+```
+
+Add `~/.local/bin` to PATH or use the absolute launcher path. Updates preserve the previous installation and activate atomically; they never kill a running server. Changed source/binaries are refused. `--dry-run` previews the command without model/GPU execution. [Installation, supported model, SDK overlays and troubleshooting](docs/INSTALLATION.md). [Version history](CHANGELOG.md). The current packaging version is **0.1.0-rc.1**.
 
 ## Performance
 
@@ -19,19 +43,12 @@ The pinned setup and verification companion for [the DS4 Strix Halo prefill fork
 
 **Full FP32 logits, complete serialized state and token IDs are bitwise identical to the reference in the verified cases.** Model weights and quantization are preserved. Coverage includes fresh32K/64K/128K prompts, 223 incremental payload comparisons and 31 snapshot restorations. [Verification evidence](https://github.com/msala9/ds4/blob/main/docs/HALO_EVIDENCE.md).
 
-The companion consumes an existing Linux ROCm toolchain and a user-supplied model.
+## Advanced source setup
 
-## Setup and build
-
-Requirements: Python3.11+, Git, make/C compiler; a complete existing ROCm SDK for GPU builds. The engine preserves upstream history and licenses. The companion installs no packages, downloads no model, changes no machine settings and starts no service.
-
-Clone the engine repository, then pass its local directory as `--source`. The companion checks out its exact pin.
+The original source/bootstrap tooling remains available for controlled experiments:
 
 ```sh
-git clone https://github.com/msala9/ds4-on-halo.git
-cd ds4-on-halo
-git clone https://github.com/msala9/ds4.git /path/to/local/release/ds4
-python3 scripts/halo.py bootstrap --source /path/to/local/release/ds4 --destination /path/to/new/engine
+python3 scripts/halo.py bootstrap --source /path/to/clean/pinned/ds4 --destination /path/to/new/engine
 python3 scripts/halo.py build --engine /path/to/new/engine --backend rocm --hipcc /path/to/existing/hipcc --jobs 2
 ```
 
@@ -61,4 +78,4 @@ The baseline checks out the exact upstream core and copies only manifest-bound `
 
 See the engine's [reproduction protocol](https://github.com/msala9/ds4/blob/main/docs/HALO_QUALIFICATION.md) and [release acceptance/build evidence](https://github.com/msala9/ds4/blob/main/docs/HALO_RELEASE.md). Save ordinary timing runs separately without `--payloads/--logits`, in alternating arms; precision CSV is supplementary to the original upstream official CSV. Loading is outside prefill, and process success is recorded as `PASS_PROCESS`, never numerical qualification. Do not publish historical performance as performance of the new engine.
 
-Run `python3 -m unittest discover -s tests -v` for the parser contract checks. [Offline verification](verification.json) records the real bootstrap/control checks and CPU build; synthetic fixture passes are not model/GPU correctness evidence.
+Run `python3 -m unittest discover -s tests -v` for the payload and installer lifecycle checks. [Offline verification](verification.json) records bootstrap/build and packaging checks; synthetic fixture passes are not model/GPU correctness evidence.

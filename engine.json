@@ -3,10 +3,11 @@
   "commit": "7141e0e4ec88de534fd25364f163f10de5bf6580",
   "upstream_base": "8db1d1d155cb0400a86a86b9c62d0defb3a6148b",
   "bench_source_sha256": "fb235384fc1b83a6298ad53369b33b1fe22142bad8b43d92932f28db1ab9b988",
-  "source_transport": "explicit local --source cloned from the private repository",
+  "source_transport": "exact pinned Git revision; remote clone or explicit local --source",
   "dependencies_record": "docs/halo/dependencies.json",
   "dependencies_record_sha256": "5079fbf5d7d678a3aae5fc30f8241183eb1db0f45d987b1e5381d44d8e9fb34a",
   "qualification": "OWNER_ACCEPTED_HISTORICAL_EVIDENCE_LOCAL_ROCM_BUILD_PASS",
   "compiled_engine_commit": "34ec09459cc64c1f565dbb2e49744ce7d852d9de",
-  "repository": "https://github.com/msala9/ds4"
+  "repository": "https://github.com/msala9/ds4",
+  "companion_repository": "https://github.com/msala9/ds4-on-halo"
 }
