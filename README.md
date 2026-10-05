@@ -4,17 +4,16 @@ The pinned setup and verification companion for [the DS4 Strix Halo prefill fork
 
 ## Performance
 
-**Up to 449.03 token/s prefill, with bitwise-preserved logits and state in verified cases.** DeepSeek V4 Flash 0731 on AMD Strix Halo (`gfx1151`), 128 GB unified memory.
+**Up to 449.03 token/s prefill.** DeepSeek V4 Flash 0731 on AMD Strix Halo (`gfx1151`), 128 GB unified memory. Bitwise logits and state are preserved in the verified cases.
 
-| Result | Prefill |
+| Prepared complete 4K request, same-machine test | Prefill |
 |---|---:|
-| DS4 Halo best recorded mean, resident 4K | **449.03 token/s** |
-| DS4 Halo controlled resident 4K test | **447.51 token/s** |
-| DS4 official published 4K interval | 295.27 token/s |
+| Original DS4 code, upstream `8db1d1d` | 311.24 token/s |
+| DS4 Halo, controlled comparison | **447.51 token/s (+43.78%)** |
 
-The official value comes from [DS4 main](https://github.com/antirez/ds4/blob/0aaea5a238fb41a35106a551e73c8409dfb751ac/speed-bench/gfx1151-prefill-results.md). It measures a 2K increment at the 4K frontier; the Halo peak measures a prepared complete 4K request. These published figures use different protocols. [The archived matched A/B record](https://github.com/msala9/ds4/blob/main/docs/halo/peak-performance.json) separately documents the **+43.78%** internal gain against original DS4 code on the same machine.
+**Best separate recorded mean: 449.03 token/s.** It has no contemporary upstream timing and is not used to calculate the gain. These are our historical measurements of the original engine and optimized checkpoints; 311.24 is not a number published by upstream. [Measurement evidence](https://github.com/msala9/ds4/blob/main/docs/halo/peak-performance.json).
 
-[Prefill charts from 2K to 128K, source measurements and PNG/SVG/PDF downloads](https://github.com/msala9/ds4/blob/main/docs/HALO_PERFORMANCE.md#prefill-across-context-lengths).
+[Separate incremental, prepared 4K and full-prompt charts, official published figures and source records](https://github.com/msala9/ds4/blob/main/docs/HALO_PERFORMANCE.md).
 
 ## Quality
 
