@@ -8,11 +8,11 @@ The pinned setup and verification companion for [the DS4 Strix Halo prefill fork
 
 | Result | Prefill |
 |---|---:|
-| Halo best recorded mean, resident 4K | **449.03 token/s** |
-| Halo controlled resident 4K test | **447.51 token/s** |
-| Official DS4 published 4K interval | 295.27 token/s |
+| DS4 Halo best recorded mean, resident 4K | **449.03 token/s** |
+| DS4 Halo controlled resident 4K test | **447.51 token/s** |
+| DS4 official published 4K interval | 295.27 token/s |
 
-**Measured improvement: +43.78%** in the controlled resident 4K comparison against upstream DS4 rebuilt on the same machine. The official published value uses 2K increments; it is context, not the denominator of that controlled gain. [Official DS4 source](https://github.com/antirez/ds4/blob/0aaea5a238fb41a35106a551e73c8409dfb751ac/speed-bench/gfx1151-prefill-results.md) - [Measurement records](https://github.com/msala9/ds4/blob/main/docs/halo/peak-performance.json).
+The official value comes from [DS4 main](https://github.com/antirez/ds4/blob/0aaea5a238fb41a35106a551e73c8409dfb751ac/speed-bench/gfx1151-prefill-results.md). It measures a 2K increment at the 4K frontier; the Halo peak measures a prepared complete 4K request. These published figures use different protocols. [The archived matched A/B record](https://github.com/msala9/ds4/blob/main/docs/halo/peak-performance.json) separately documents the **+43.78%** internal gain against original DS4 code on the same machine.
 
 [Prefill charts from 2K to 128K, source measurements and PNG/SVG/PDF downloads](https://github.com/msala9/ds4/blob/main/docs/HALO_PERFORMANCE.md#prefill-across-context-lengths).
 
