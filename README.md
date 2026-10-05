@@ -2,18 +2,21 @@
 
 The pinned setup and verification companion for [the DS4 Strix Halo prefill fork](https://github.com/msala9/ds4). The engine adds routed MoE, attention, projection and resident-key indexer paths for single-device AMD `gfx1151`; this repository handles exact source-pin bootstrap, build identity, benchmark configuration and full bitwise payload comparison.
 
-## Performance and quality
+## Performance
 
-DeepSeek V4 Flash 0731, Strix Halo 128 GB; prefill at the **4K context frontier in 2048-token increments**:
+**Up to 449.03 token/s prefill, with bitwise-preserved logits and state in verified cases.** DeepSeek V4 Flash 0731 on AMD Strix Halo (`gfx1151`), 128 GB unified memory.
 
-| Engine | Prefill | Increase |
-|---|---:|---:|
-| Official DS4 | 295.27 token/s | Reference |
-| DS4 on Halo | **413.18 token/s** | **+39.93%** |
+| Result | Prefill |
+|---|---:|
+| Halo best recorded mean, resident 4K | **449.03 token/s** |
+| Halo controlled resident 4K test | **447.51 token/s** |
+| Official DS4 published 4K interval | 295.27 token/s |
 
-[Official DS4 result](https://github.com/antirez/ds4/blob/0aaea5a238fb41a35106a551e73c8409dfb751ac/speed-bench/gfx1151-prefill-results.md) - [Halo measurements and quality](https://github.com/msala9/ds4/blob/main/docs/HALO_PERFORMANCE.md). The percentage compares published throughput from the respective setups, rather than a controlled A/B. The separate resident fresh4096 record is **447.51 token/s**.
+**Measured improvement: +43.78%** in the controlled resident 4K comparison against upstream DS4 rebuilt on the same machine. The official published value uses 2K increments; it is context, not the denominator of that controlled gain. [Official DS4 source](https://github.com/antirez/ds4/blob/0aaea5a238fb41a35106a551e73c8409dfb751ac/speed-bench/gfx1151-prefill-results.md) - [Measurement records](https://github.com/msala9/ds4/blob/main/docs/halo/peak-performance.json).
 
-**Bitwise logits, complete serialized state and token IDs match the reference in the verified cases.** Model weights and quantization are preserved. [Verification evidence](https://github.com/msala9/ds4/blob/main/docs/HALO_EVIDENCE.md).
+## Quality
+
+**Full FP32 logits, complete serialized state and token IDs are bitwise identical to the reference in the verified cases.** Model weights and quantization are preserved. Coverage includes fresh32K/64K/128K prompts, 223 incremental payload comparisons and 31 snapshot restorations. [Verification evidence](https://github.com/msala9/ds4/blob/main/docs/HALO_EVIDENCE.md).
 
 Both repositories are private under msala9; the planned official home is madrock. The companion consumes an existing Linux ROCm toolchain and a user-supplied model.
 
