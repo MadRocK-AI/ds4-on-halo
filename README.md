@@ -14,6 +14,8 @@ The pinned setup and verification companion for [the DS4 Strix Halo prefill fork
 
 **Measured improvement: +43.78%** in the controlled resident 4K comparison against upstream DS4 rebuilt on the same machine. The official published value uses 2K increments; it is context, not the denominator of that controlled gain. [Official DS4 source](https://github.com/antirez/ds4/blob/0aaea5a238fb41a35106a551e73c8409dfb751ac/speed-bench/gfx1151-prefill-results.md) - [Measurement records](https://github.com/msala9/ds4/blob/main/docs/halo/peak-performance.json).
 
+[Prefill charts from 2K to 128K, source measurements and PNG/SVG/PDF downloads](https://github.com/msala9/ds4/blob/main/docs/HALO_PERFORMANCE.md#prefill-across-context-lengths).
+
 ## Quality
 
 **Full FP32 logits, complete serialized state and token IDs are bitwise identical to the reference in the verified cases.** Model weights and quantization are preserved. Coverage includes fresh32K/64K/128K prompts, 223 incremental payload comparisons and 31 snapshot restorations. [Verification evidence](https://github.com/msala9/ds4/blob/main/docs/HALO_EVIDENCE.md).
