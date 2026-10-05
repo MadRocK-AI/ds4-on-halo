@@ -1,13 +1,15 @@
 # ds4-on-halo
 
-The installer, launcher and verification companion for [the DS4 Strix Halo prefill fork](https://github.com/msala9/ds4). The engine adds routed MoE, attention, projection and resident-key indexer paths for single-device AMD `gfx1151`; this repository handles setup, exact source pins, build identity and verification.
+The installer, launcher and verification companion for [the DS4 Strix Halo prefill fork](https://github.com/MadRocK-AI/ds4). The engine adds routed MoE, attention, projection and resident-key indexer paths for single-device AMD `gfx1151`; this repository handles setup, exact source pins, build identity and verification.
+
+**Release candidate 0.1.0-rc.1.** Installation, update/rollback and ROCm build/link have been checked in WSL. Live model execution through this launcher has not been checked on Halo. Performance and bitwise results below describe the verified historical engine checkpoints. [Verification record](verification.json).
 
 ## Quick start
 
-On a **single-device Strix Halo gfx1151 with 128 GB memory**, use x86_64 Linux, Python 3.11+, Git, make, `rocminfo` and the [documented existing ROCm SDK](https://github.com/msala9/ds4/blob/main/docs/HALO_RELEASE.md#build-dependencies), including rocWMMA 2.2.1. Supply the existing DeepSeek V4 Flash 0731 IQ2 GGUF; the installer verifies its complete SHA256.
+On a **single-device Strix Halo gfx1151 with 128 GB memory**, use x86_64 Linux, Python 3.11+, Git, make, `rocminfo` and the [documented existing ROCm SDK](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_RELEASE.md#build-dependencies), including rocWMMA 2.2.1. Supply the existing DeepSeek V4 Flash 0731 IQ2 GGUF; the installer verifies its complete SHA256.
 
 ```sh
-git clone https://github.com/msala9/ds4-on-halo.git
+git clone https://github.com/MadRocK-AI/ds4-on-halo.git
 cd ds4-on-halo
 bash install.sh --model /absolute/path/to/the/model.gguf
 ~/.local/bin/ds4-halo serve
@@ -28,20 +30,20 @@ Add `~/.local/bin` to PATH or use the absolute launcher path. Updates preserve t
 
 ## Performance
 
-**Up to 449.03 token/s prefill.** DeepSeek V4 Flash 0731 on AMD Strix Halo (`gfx1151`), 128 GB unified memory. Bitwise logits and state are preserved in the verified cases.
+**Best recorded prefill: 449.03 token/s.** DeepSeek V4 Flash 0731 on AMD Strix Halo (`gfx1151`), 128 GB unified memory. Bitwise logits and state are preserved in the verified cases.
 
 | Prepared complete 4K request, same-machine test | Prefill |
 |---|---:|
 | Original DS4 code, upstream `8db1d1d` | 311.24 token/s |
 | DS4 Halo, controlled comparison | **447.51 token/s (+43.78%)** |
 
-**Best separate recorded mean: 449.03 token/s.** It has no contemporary upstream timing and is not used to calculate the gain. These are our historical measurements of the original engine and optimized checkpoints; 311.24 is not a number published by upstream. [Measurement evidence](https://github.com/msala9/ds4/blob/main/docs/halo/peak-performance.json).
+**Best separate recorded mean: 449.03 token/s.** It has no contemporary upstream timing and is not used to calculate the gain. These are our historical measurements of the original engine and optimized checkpoints; 311.24 is not a number published by upstream. [Measurement evidence](https://github.com/MadRocK-AI/ds4/blob/main/docs/halo/peak-performance.json).
 
-[Separate incremental, prepared 4K and full-prompt charts, official published figures and source records](https://github.com/msala9/ds4/blob/main/docs/HALO_PERFORMANCE.md).
+[Separate incremental, prepared 4K and full-prompt charts, official published figures and source records](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_PERFORMANCE.md).
 
 ## Quality
 
-**Full FP32 logits, complete serialized state and token IDs are bitwise identical to the reference in the verified cases.** Model weights and quantization are preserved. Coverage includes fresh32K/64K/128K prompts, 223 incremental payload comparisons and 31 snapshot restorations. [Verification evidence](https://github.com/msala9/ds4/blob/main/docs/HALO_EVIDENCE.md).
+**Full FP32 logits, complete serialized state and token IDs are bitwise identical to the reference in the verified cases.** Model weights and quantization are preserved. Coverage includes fresh32K/64K/128K prompts, 223 incremental payload comparisons and 31 snapshot restorations. [Verification evidence](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_EVIDENCE.md).
 
 ## Advanced source setup
 
@@ -76,6 +78,6 @@ python3 scripts/compare_payloads.py /path/to/new/qual-base /path/to/new/qual-hal
 
 The baseline checks out the exact upstream core and copies only manifest-bound `ds4_bench.c` readback/timing instrumentation. Its verified modification is intentional; no Halo backend code is copied. The comparison requires matching source/model/prompt/config identity, complete payload inventory and exact decode count. It checks byte equality and, for intermediate frontiers, prefill-versus-restored equality within both arms. `--require-restore` requires serialized snapshot restoration at every intermediate frontier, and refuses fresh-only or replay cases. A passing comparison describes tested cases only.
 
-See the engine's [reproduction protocol](https://github.com/msala9/ds4/blob/main/docs/HALO_QUALIFICATION.md) and [release acceptance/build evidence](https://github.com/msala9/ds4/blob/main/docs/HALO_RELEASE.md). Save ordinary timing runs separately without `--payloads/--logits`, in alternating arms; precision CSV is supplementary to the original upstream official CSV. Loading is outside prefill, and process success is recorded as `PASS_PROCESS`, never numerical qualification. Do not publish historical performance as performance of the new engine.
+See the engine's [reproduction protocol](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_QUALIFICATION.md) and [release acceptance/build evidence](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_RELEASE.md). Save ordinary timing runs separately without `--payloads/--logits`, in alternating arms; precision CSV is supplementary to the original upstream official CSV. Loading is outside prefill, and process success is recorded as `PASS_PROCESS`, never numerical qualification. Historical throughput is scoped to its recorded checkpoints and benchmark conditions; it is not a new measurement of the integrated release executable.
 
 Run `python3 -m unittest discover -s tests -v` for the payload and installer lifecycle checks. [Offline verification](verification.json) records bootstrap/build and packaging checks; synthetic fixture passes are not model/GPU correctness evidence.

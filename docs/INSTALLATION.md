@@ -1,6 +1,6 @@
 # Install and run DS4 Halo
 
-Supported target: **x86_64 Linux, single AMD Strix Halo gfx1151, 128 GB unified memory**. Install Python 3.11+, Git, make, a C compiler, `rocminfo` and a complete ROCm SDK first. The validated SDK recipe uses AMD clang 23 / HIP 7.15, rocBLAS 5.6, hipBLASLt, hipCUB, rocPRIM and **rocWMMA 2.2.1**; [exact dependency identities](https://github.com/msala9/ds4/blob/main/docs/HALO_RELEASE.md#build-dependencies) are recorded in the engine.
+Target configuration: **x86_64 Linux, single AMD Strix Halo gfx1151, 128 GB unified memory**. Install Python 3.11+, Git, make, a C compiler, `rocminfo` and a complete ROCm SDK first. The validated SDK recipe uses AMD clang 23 / HIP 7.15, rocBLAS 5.6, hipBLASLt, hipCUB, rocPRIM and **rocWMMA 2.2.1**; [exact dependency identities](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_RELEASE.md#build-dependencies) are recorded in the engine.
 
 Use the existing **DeepSeek V4 Flash 0731 IQ2** model:
 
@@ -10,10 +10,12 @@ Use the existing **DeepSeek V4 Flash 0731 IQ2** model:
 
 The installer reads the model once to verify its full hash. It downloads source when needed; it does not download weights or install packages/drivers. Model loading and inference are not part of installation.
 
+This is release candidate **0.1.0-rc.1**. WSL checks cover installation, update/rollback and ROCm build/link; live model execution through the launcher has not been checked on Halo. [Verification record](../verification.json).
+
 ## Setup
 
 ```sh
-git clone https://github.com/msala9/ds4-on-halo.git
+git clone https://github.com/MadRocK-AI/ds4-on-halo.git
 cd ds4-on-halo
 bash install.sh --model /absolute/path/to/the/model.gguf
 ```
@@ -42,7 +44,7 @@ ds4-halo run --prompt "Explain why the sky is blue."
 
 `--dry-run` prints the command without GPU enumeration or model execution. The supported launcher context range is 2K–128K; chunk size is 2K or 4K. The indexer measurements use 2K chunks. A context setting is not a promise of the same speed at every depth. The launcher rejects changed engine source/binaries, incompatible CPU builds and changed model content. Inherited `DS4_*` tuning switches are cleared; use documented launcher options. `LD_PRELOAD` is refused.
 
-The server provides the upstream API documented in [the engine manual](https://github.com/msala9/ds4/blob/main/README_UPSTREAM.md); this companion adds no CUDA serving-fork features.
+The server provides the upstream API documented in [the engine manual](https://github.com/MadRocK-AI/ds4/blob/main/README_UPSTREAM.md); this companion adds no CUDA serving-fork features.
 
 ## Update and roll back
 
@@ -79,4 +81,18 @@ Without a Halo GPU, WSL can verify the build/install flow explicitly:
 bash install.sh --build-only --hipcc /path/to/hipcc --sdk-env /path/to/sdk-env.json
 ```
 
-No model is required for build-only setup, and no server is started. For packaging checks without ROCm, use `--build-only --backend cpu`; such installations cannot launch model inference. A normal model-equipped installation can be prepared later by rerunning the installer on the target Halo. [Performance and numerical evidence](https://github.com/msala9/ds4/blob/main/docs/HALO_PERFORMANCE.md) retain their original benchmark conditions.
+No model is required for build-only setup, and no server is started. For packaging checks without ROCm, use `--build-only --backend cpu`; such installations cannot launch model inference. A normal model-equipped installation can be prepared later by rerunning the installer on the target Halo. [Performance and numerical evidence](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_PERFORMANCE.md) retain their original benchmark conditions.
+
+## Troubleshooting
+
+| Reported problem | Next step |
+|---|---|
+| `hipcc` or SDK headers/libraries missing | Supply the complete existing SDK, check `--hipcc` and the documented `--sdk-env` paths, then run `doctor`. |
+| rocWMMA version mismatch | Put the recorded rocWMMA 2.2.1 headers first in the include paths. |
+| GPU identity or `/dev/kfd` access refused | Check `rocminfo` and ROCm device permissions on the target Halo. Use `--build-only` only for packaging checks. |
+| Model identity mismatch | Use the exact filename, byte count and SHA256 listed above; the installer requires that model. |
+| Source or executable identity changed | Reinstall the intended clean pinned source; `status --verify` reports the managed build identity. |
+| Build failed before activation | Inspect the retained `versions/.pending-*` directory. The previous active installation remains selected. |
+| No previous version for rollback | Install an update first; rollback requires a retained previous installation. |
+
+Include the companion version, `status --verify`, `doctor` output and the compiler error when reporting an installation issue. Remove personal paths before posting logs.

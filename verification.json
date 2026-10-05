@@ -262,5 +262,82 @@
       "rocm-distribution-result.json": "12fe8891373bececd62fca9ed078b9a3ace6ba3c7a604822dc288e61c3adf80a",
       "rocm-install.log": "644f835b22f8ea236d1021c53b338d831a27620c92f6176a38dc7a7216bba417"
     }
+  },
+  "release_candidate": {
+    "version": "0.1.0-rc.1",
+    "engine_commit": "fd77fb67d97f1b40279793dc856af92af71267c9",
+    "package_identity": "26a721c7e4b884cb385d745ca531a65a61de99ad2dc6977632632cc40ce3b29e",
+    "linux_unit_tests": {
+      "status": "PASS",
+      "cases": 24,
+      "command": "python3 -m unittest discover -s tests -v"
+    },
+    "actual_cpu_lifecycle": {
+      "status": "PASS",
+      "steps": [
+        {
+          "name": "cpu-install",
+          "status": "PASS",
+          "returncode": 0
+        },
+        {
+          "name": "cpu-status",
+          "status": "PASS",
+          "returncode": 0
+        },
+        {
+          "name": "cpu-update",
+          "status": "PASS",
+          "returncode": 0
+        },
+        {
+          "name": "cpu-updated-status",
+          "status": "PASS",
+          "returncode": 0
+        },
+        {
+          "name": "cpu-rollback",
+          "status": "PASS",
+          "returncode": 0
+        },
+        {
+          "name": "cpu-rolled-back-status",
+          "status": "PASS",
+          "returncode": 0
+        },
+        {
+          "name": "cpu-inference-refused",
+          "status": "PASS",
+          "returncode": 1
+        },
+        {
+          "name": "cpu-reinstall",
+          "status": "PASS",
+          "returncode": 0
+        }
+      ],
+      "elapsed_seconds": 302.78,
+      "test_update_version": "0.1.0-rc.2 fixture only"
+    },
+    "rocm_build_evidence": {
+      "status": "PASS_ROCM_DISTRIBUTION_INSTALL",
+      "tested_engine_commit": "7141e0e4ec88de534fd25364f163f10de5bf6580",
+      "tested_package_identity": "b4f3bd2a81a56b0f4bcb562433ce893be785a93938b60b7bc9688dd1718a0b09",
+      "inference_source_unchanged": true,
+      "installer_code_unchanged": true,
+      "targets": 5,
+      "relocation_checks": 5,
+      "scope": "Recorded real ROCm installer run before destination/pin metadata changes; no new ROCm build or GPU execution is claimed"
+    },
+    "model_execution": false,
+    "GPU_execution": false,
+    "lifecycle_receipt_sha256": "a67d4358308b671d36e6be4d552b0bc86de25d91af8fa367c73b83a5bbeb5dd1",
+    "documentation": {
+      "markdown_files_scanned": 58,
+      "checked_links": 225,
+      "broken_links": 0,
+      "internal_publication_strategy_references": 0,
+      "archived_chart_variants_revalidated": 5
+    }
   }
 }
