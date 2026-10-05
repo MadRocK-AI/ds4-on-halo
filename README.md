@@ -2,18 +2,20 @@
 
 The pinned setup and verification companion for [the DS4 Strix Halo prefill fork](https://github.com/msala9/ds4). The engine adds routed MoE, attention, projection and resident-key indexer paths for single-device AMD `gfx1151`; this repository handles exact source-pin bootstrap, build identity, benchmark configuration and full bitwise payload comparison.
 
-## What changes versus upstream DS4?
+## Performance and quality
 
-| Area | Halo contribution | Evidence |
-|---|---|---|
-| Resident fresh4096 prefill | Frozen structural9 checkpoint: **447.506868 token/s** | +43.781181% versus its **local upstream8db resident control** at 311.241615 token/s; same historical campaign |
-| Long-context prefill, same2048 chunk | **373.87 / 335.66 / 278.58 token/s** at 32K/64K/128K | +37.34% / +33.35% / +27.76% versus matching local upstream8db controls |
-| Numerical preservation | Full FP32 logits, complete serialized state and token-ID comparisons | Six fresh long-context cases; separate incremental diagnostic with 223 payload comparisons and 31 snapshot restores |
-| Reproducibility | Exact engine commit, executable/config/model identities and restore-aware comparison | `engine.json`, build records and comparison scripts |
+DeepSeek V4 Flash 0731, Strix Halo 128 GB; prefill at the **4K context frontier in 2048-token increments**:
 
-The **311.24 token/s control is not the original upstream-published Clean DS4 baseline**. The upstream report lists Clean DS4 at 187.26 token/s and its tuned path at 292.86, with a later 294.38 stock-launch result; those use 2048-token increments and different conditions. We keep them separate from fresh4096. These numbers describe accepted historical checkpoints; the integrated engine has a verified WSL build/link, with no new GPU run claimed.
+| Engine | Prefill | Increase |
+|---|---:|---:|
+| Official DS4 | 295.27 token/s | Reference |
+| DS4 on Halo | **413.18 token/s** | **+39.93%** |
 
-Read [the full fork delta, performance and bitwise scope](https://github.com/msala9/ds4/blob/main/docs/HALO_PERFORMANCE.md) and [operator admission/fallbacks](https://github.com/msala9/ds4/blob/main/docs/HALO.md). This companion consumes an existing Linux ROCm toolchain and a user-supplied model. Both repositories are private under msala9; the planned official destination is madrock.
+[Official DS4 result](https://github.com/antirez/ds4/blob/0aaea5a238fb41a35106a551e73c8409dfb751ac/speed-bench/gfx1151-prefill-results.md) - [Halo measurements and quality](https://github.com/msala9/ds4/blob/main/docs/HALO_PERFORMANCE.md). The percentage compares published throughput from the respective setups, rather than a controlled A/B. The separate resident fresh4096 record is **447.51 token/s**.
+
+**Bitwise logits, complete serialized state and token IDs match the reference in the verified cases.** Model weights and quantization are preserved. [Verification evidence](https://github.com/msala9/ds4/blob/main/docs/HALO_EVIDENCE.md).
+
+Both repositories are private under msala9; the planned official home is madrock. The companion consumes an existing Linux ROCm toolchain and a user-supplied model.
 
 ## Setup and build
 
