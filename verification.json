@@ -73,7 +73,7 @@
     }
   ],
   "pending": [
-    "New integrated bitwise, branch coverage and broader GPU qualification were not part of the live smoke; historical numerical/performance evidence remains separate"
+    "Wider model/context/snapshot/platform matrices beyond the documented candidate cases; no universal quality claim"
   ],
   "historical_verification": {
     "scope": "Real local Git and CPU/dry-run setup verification. Tiny synthetic input is not a model/GPU qualification.",
@@ -421,5 +421,12 @@
     "source_receipt_sha256": "cad838ab63a034fccd87b21d6742a037e29b3d396ef87fbc3a0b6ce0bca9f303",
     "final_receipt_sha256": "77980ae976d3e6892cdba396f5405aa3383aeb83659a96b9e80f5e0a6676dfda",
     "server_log_sha256": "3036dc451667c48a0ad42a9746bd15e2d0f7f10387dbb04616688435e4c3b722"
+  },
+  "current_release": {
+    "version": "0.1.0-rc.2",
+    "status": "PASS_ACTUAL_CLEAN_RC2_INSTALLER_NUMERICAL_AND_LAUNCHER_API_ACCEPTANCE",
+    "engine_commit": "c077b9c634d126275035efb8dbd4007f56a45be7",
+    "tested_companion_commit": "0afd451ee06d57ee03edfae09872edc8219e90e9",
+    "evidence": "distribution-acceptance.json"
   }
 }

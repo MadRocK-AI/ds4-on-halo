@@ -6,11 +6,14 @@
   "source_transport": "exact pinned Git revision; remote clone or explicit local --source",
   "dependencies_record": "docs/halo/dependencies.json",
   "dependencies_record_sha256": "5079fbf5d7d678a3aae5fc30f8241183eb1db0f45d987b1e5381d44d8e9fb34a",
-  "qualification": "MEASURED_PARENT_NUMERICAL_AND_PERFORMANCE_PASS_CLEANED_INSTALLER_ARTIFACT_ACCEPTANCE_PENDING",
-  "compiled_engine_commit": null,
+  "qualification": "PASS_ACTUAL_RC2_INSTALLER_COMPLETE_PAYLOADS_AND_LAUNCHER_API",
+  "compiled_engine_commit": "c077b9c634d126275035efb8dbd4007f56a45be7",
   "repository": "https://github.com/MadRocK-AI/ds4",
   "companion_repository": "https://github.com/MadRocK-AI/ds4-on-halo",
   "tested_source_base_commit": "fd77fb67d97f1b40279793dc856af92af71267c9",
   "tested_candidate_record": "docs/halo/halo2-qualification.json",
-  "diagnostic_cleanup": "Excluded optional runtime trace patch; functional source correspondence recorded in local review manifest"
+  "diagnostic_cleanup": "Runtime trace hooks excluded; source correspondence and actual installed validation are recorded in distribution-acceptance.json",
+  "installed_acceptance_record": "distribution-acceptance.json",
+  "tested_companion_commit": "0afd451ee06d57ee03edfae09872edc8219e90e9",
+  "tested_package_identity": "f1825012b8cf395e82d6d94af5216e41d45a553023e8bab7ff01fe25a1e28eb2"
 }

@@ -2,7 +2,7 @@
 
 The installer, launcher and verification companion for [the DS4 Strix Halo prefill fork](https://github.com/MadRocK-AI/ds4). The engine adds routed MoE, attention, projection and resident-key indexer paths for single-device AMD `gfx1151`; this repository handles setup, exact source pins, build identity and verification.
 
-**Latest tested engine candidate: 454.59 token/s prepared prefill (+44.12%), with bitwise-identical complete payloads in the tested cases.** This unpublished patched build passed the unchanged performance threshold on a second Halo system with IOMMU off. This local 0.1.0-rc.2 distribution candidate pins the cleaned engine source; its actual installer-built artifact acceptance remains pending. The published 0.1.0-rc.1 is unchanged. [Live record](live-smoke.json) Â· [Validation scope](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_RELEASE.md).
+**DS4 Strix Halo rc.2: 454.59 token/s prepared prefill (+44.12%), with bitwise-identical complete payloads in the tested cases.** The rc.2 source passed the unchanged performance threshold and actual installer-built numerical and launcher/API acceptance on a second Halo system with IOMMU off. This companion pins the exact cleaned qualified source. [Installed acceptance](distribution-acceptance.json). [Live record](live-smoke.json) · [Validation scope](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_RELEASE.md).
 
 ## Quick start
 
@@ -26,26 +26,20 @@ ds4-halo update
 ds4-halo rollback
 ```
 
-Add `~/.local/bin` to PATH or use the absolute launcher path. Updates preserve the previous installation and activate atomically; they never kill a running server. Changed source/binaries are refused. `--dry-run` previews the command without model/GPU execution. [Installation, supported model, SDK overlays and troubleshooting](docs/INSTALLATION.md). [Version history](CHANGELOG.md). The local candidate packaging version is **0.1.0-rc.2**; it is not published.
+Add `~/.local/bin` to PATH or use the absolute launcher path. Updates preserve the previous installation and activate atomically; they never kill a running server. Changed source/binaries are refused. `--dry-run` previews the command without model/GPU execution. [Installation, supported model, SDK overlays and troubleshooting](docs/INSTALLATION.md). [Version history](CHANGELOG.md). The current packaging version is **0.1.0-rc.2**.
 
 ## Performance
 
-**Latest unpublished engine candidate, 2026-10-06: 454.59 token/s mean**, versus fresh same-system original DS4 at 315.41 (**+44.12%**), with IOMMU off. Two independent processes per engine each used three pure-prefill warmups and one measured complete 4K request, capacity 4,352, generation disabled. Samples were **454.52 / 454.65**; the unchanged 440 minimum passed. The same-binary IOMMU-on mean was 429.79; the observed before/after increase is **5.77%**, with all complete compared payloads bitwise identical. This qualifies the measured parent; final acceptance of the cleaned installer-built artifact remains pending. [Candidate identities, all samples and scope](https://github.com/MadRocK-AI/ds4/blob/main/docs/halo/halo2-qualification.json).
+**Official DS4 published results:** 231.91 token/s at 2K, 292.86 for its warm 4K result and 295.27 in the later 2K→4K interval. [Official Strix Halo report](https://github.com/antirez/ds4/blob/0aaea5a238fb41a35106a551e73c8409dfb751ac/speed-bench/gfx1151-prefill-results.md). Those are different workloads/SDK conditions. The **315.41** control is our measurement of pinned original DS4 on the same machine and protocol as Halo; **+44.12%** refers to that matched comparison.
 
-**Historical checkpoint record: 449.03 token/s.** DeepSeek V4 Flash 0731 on AMD Strix Halo (`gfx1151`), 128 GB unified memory. These checkpoint results do not qualify the current packaged build.
+**Qualified engine prefill chain, 2026-10-06: 454.59 token/s mean**, versus fresh same-system original DS4 at 315.41 (**+44.12%**), with IOMMU off. Two independent processes per engine each used three pure-prefill warmups and one measured complete 4K request, capacity 4,352, generation disabled. Samples were **454.52 / 454.65**; the unchanged 440 minimum passed. The same-binary IOMMU-on mean was 429.79; the observed before/after increase is **5.77%**, with all complete compared payloads bitwise identical. The cleaned rc.2 installed artifact also matched the complete retained reference payloads and passed its API checks. [Candidate identities, all samples and scope](https://github.com/MadRocK-AI/ds4/blob/main/docs/halo/halo2-qualification.json).
 
-| Prepared complete 4K request, same-machine test | Prefill |
-|---|---:|
-| Original DS4 code, upstream `8db1d1d` | 311.24 token/s |
-| DS4 Halo, controlled comparison | **447.51 token/s (+43.78%)** |
+Historical 447.51/449.03 and long-context measurements remain separately documented in [the performance evidence](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_PERFORMANCE.md).
 
-**Best separate recorded mean: 449.03 token/s.** It has no contemporary upstream timing and is not used to calculate the gain. These are our historical measurements of the original engine and optimized checkpoints; 311.24 is not a number published by upstream. [Measurement evidence](https://github.com/MadRocK-AI/ds4/blob/main/docs/halo/peak-performance.json).
-
-[Separate incremental, prepared 4K and full-prompt charts, official published figures and source records](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_PERFORMANCE.md).
 
 ## Quality
 
-The latest patched candidate matched fresh original-DS4 token IDs, full FP32 logits and complete states bitwise in the tested 4K and cache-lifetime cases, including 16-token generation checks. The current local pin removes only diagnostic code and corrects a comment; its installed artifact still needs the stated acceptance check. Historical checkpoints retain their wider fresh32K/64K/128K, 223 incremental payload and 31 snapshot comparisons; that wider matrix has not been rerun on this candidate. [Verification evidence](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_EVIDENCE.md).
+The latest patched candidate matched fresh original-DS4 token IDs, full FP32 logits and complete states bitwise in the tested 4K and cache-lifetime cases, including 16-token generation checks. The current pin removes only optional runtime diagnostics from that qualified source and has its own successful installed-artifact comparison. Historical checkpoints retain their wider fresh32K/64K/128K, 223 incremental payload and 31 snapshot comparisons; that wider matrix has not been rerun on this candidate. [Verification evidence](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_EVIDENCE.md).
 
 ## Advanced source setup
 
@@ -82,4 +76,6 @@ The baseline checks out the exact upstream core and copies only manifest-bound `
 
 See the engine's [reproduction protocol](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_QUALIFICATION.md) and [release acceptance/build evidence](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_RELEASE.md). Save ordinary timing runs separately without `--payloads/--logits`, in alternating arms; precision CSV is supplementary to the original upstream official CSV. Loading is outside prefill, and process success is recorded as `PASS_PROCESS`, never numerical qualification. Historical throughput is scoped to its recorded checkpoints and benchmark conditions; it is not a new measurement of the integrated release executable.
 
-Run `python3 -m unittest discover -s tests -v` for the payload and installer lifecycle checks. [Verification history](verification.json) records bootstrap/build and packaging checks. The [live Halo smoke](live-smoke.json) generated eight tokens for each of two requests with 14- and 4,214-token prompts and 2K chunks. Both budgets ended during thinking; answer quality, new bitwise comparisons, wider context coverage and throughput were not assessed.
+Run `python3 -m unittest discover -s tests -v` for the payload and installer lifecycle checks. [Verification history](verification.json) records bootstrap/build and packaging checks. The [rc.2 installed acceptance](distribution-acceptance.json) verified all six complete numerical payloads and generated eight tokens for each of two real API requests with 14 / 4,214-token prompts and 4K chunks. The older [rc.1 smoke](live-smoke.json) remains separately recorded. Both budgets ended during thinking; broad answer quality and a new long-context/performance matrix were not assessed; complete installed numerical equality was verified separately.
+
+[Published package provenance](release-provenance.json) records the tested package identity, published metadata identity and unchanged executable inputs.
