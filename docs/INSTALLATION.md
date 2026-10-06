@@ -10,7 +10,7 @@ Use the existing **DeepSeek V4 Flash 0731 IQ2** model:
 
 The installer reads the model once to verify its full hash. It downloads source when needed; it does not download weights or install packages/drivers. Model loading and inference are not part of installation.
 
-This is release candidate **0.1.0-rc.1**. WSL checks cover installation, update/rollback and ROCm build/link; live model execution through the launcher has not been checked on Halo. [Verification record](../verification.json).
+This local distribution candidate is **0.1.0-rc.2**, with installer-built acceptance pending. The following live checks describe published **0.1.0-rc.1**. WSL checks cover installation, update/rollback and ROCm build/link. A live installation and launcher/API smoke also passed on Halo: 14- and 4,214-token prompts, eight generated tokens each, with 2K chunks. The token budgets ended during thinking; this verifies bounded execution, without a new answer-quality, bitwise or speed claim. [Live record](../live-smoke.json) Â· [Verification history](../verification.json).
 
 ## Setup
 
@@ -42,7 +42,7 @@ ds4-halo serve --context 131072 --dry-run
 ds4-halo run --prompt "Explain why the sky is blue."
 ```
 
-`--dry-run` prints the command without GPU enumeration or model execution. The supported launcher context range is 2K–128K; chunk size is 2K or 4K. The indexer measurements use 2K chunks. A context setting is not a promise of the same speed at every depth. The launcher rejects changed engine source/binaries, incompatible CPU builds and changed model content. Inherited `DS4_*` tuning switches are cleared; use documented launcher options. `LD_PRELOAD` is refused.
+`--dry-run` prints the command without GPU enumeration or model execution. The supported launcher context range is 2Kâ€“128K; chunk size is 2K or 4K. The indexer measurements use 2K chunks. A context setting is not a promise of the same speed at every depth. The launcher rejects changed engine source/binaries, incompatible CPU builds and changed model content. Inherited `DS4_*` tuning switches are cleared; use documented launcher options. `LD_PRELOAD` is refused.
 
 The server provides the upstream API documented in [the engine manual](https://github.com/MadRocK-AI/ds4/blob/main/README_UPSTREAM.md); this companion adds no CUDA serving-fork features.
 
