@@ -2,7 +2,7 @@
 
 The installer, launcher and verification companion for [the DS4 Strix Halo prefill fork](https://github.com/MadRocK-AI/ds4). The engine adds routed MoE, attention, projection and resident-key indexer paths for single-device AMD `gfx1151`; this repository handles setup, exact source pins, build identity and verification.
 
-**DS4 Strix Halo rc.2: 454.59 token/s prepared prefill (+44.12%), with bitwise-identical complete payloads in the tested cases.** The rc.2 source passed the unchanged performance threshold and actual installer-built numerical and launcher/API acceptance on a second Halo system with IOMMU off. This companion pins the exact cleaned qualified source. [Installed acceptance](distribution-acceptance.json). [Live record](live-smoke.json) · [Validation scope](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_RELEASE.md).
+**DS4 Strix Halo rc.2: 454.59 token/s prepared prefill, with bitwise-identical complete payloads in the tested cases.** The rc.2 source passed the unchanged performance threshold and actual installer-built numerical and launcher/API acceptance on a second Halo system with IOMMU off. This companion pins the exact cleaned qualified source. [Installed acceptance](distribution-acceptance.json). [Live record](live-smoke.json) · [Validation scope](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_RELEASE.md).
 
 ## Quick start
 
@@ -30,12 +30,18 @@ Add `~/.local/bin` to PATH or use the absolute launcher path. Updates preserve t
 
 ## Performance
 
-**Official DS4 published results:** 231.91 token/s at 2K, 292.86 for its warm 4K result and 295.27 in the later 2K→4K interval. [Official Strix Halo report](https://github.com/antirez/ds4/blob/0aaea5a238fb41a35106a551e73c8409dfb751ac/speed-bench/gfx1151-prefill-results.md). Those are different workloads/SDK conditions. The **315.41** control is our measurement of pinned original DS4 on the same machine and protocol as Halo; **+44.12%** refers to that matched comparison.
+| Strix Halo, DeepSeek V4 Flash 0731 IQ2, 128 GB | Prefill |
+| --- | ---: |
+| Original DS4 — official published 2K→4K interval | **295.27 token/s** |
+| DS4 Halo — prepared complete 4K request | **454.59 token/s** |
 
-**Qualified engine prefill chain, 2026-10-06: 454.59 token/s mean**, versus fresh same-system original DS4 at 315.41 (**+44.12%**), with IOMMU off. Two independent processes per engine each used three pure-prefill warmups and one measured complete 4K request, capacity 4,352, generation disabled. Samples were **454.52 / 454.65**; the unchanged 440 minimum passed. The same-binary IOMMU-on mean was 429.79; the observed before/after increase is **5.77%**, with all complete compared payloads bitwise identical. The cleaned rc.2 installed artifact also matched the complete retained reference payloads and passed its API checks. [Candidate identities, all samples and scope](https://github.com/MadRocK-AI/ds4/blob/main/docs/halo/halo2-qualification.json).
+The original DS4 number comes directly from its [official gfx1151 report](https://github.com/antirez/ds4/blob/0aaea5a238fb41a35106a551e73c8409dfb751ac/speed-bench/gfx1151-prefill-results.md). The protocols differ: the published reference is a 2K increment ending at 4K; Halo is a complete prepared 4K request. No speedup percentage is inferred between them.
 
-Historical 447.51/449.03 and long-context measurements remain separately documented in [the performance evidence](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_PERFORMANCE.md).
+Halo samples: **454.52 / 454.65 token/s**, mean **454.59**. Two independent processes each used three pure-prefill warmups and one measured request, capacity 4,352, generation disabled, IOMMU off and a 106 GiB shared GPU ceiling. Loading is excluded; timing has no profiler, trace or payload readback. The cleaned rc.2 installer-built executable passed all six complete numerical payloads and launcher/API checks.
 
+![DS4 Halo 454.59 token/s and the separately labeled official DS4 reference](https://raw.githubusercontent.com/MadRocK-AI/ds4/main/docs/halo/figures/prefill-4k-release.png)
+
+Historical Halo records and context curves starting at **2K**, including 32K/64K/128K with the indexer, remain in [the performance documentation](https://github.com/MadRocK-AI/ds4/blob/main/docs/HALO_PERFORMANCE.md).
 
 ## Quality
 

@@ -2,7 +2,7 @@
 
 ## 0.1.0-rc.2 — 2026-10-06
 
-- Recorded the separate patched engine candidate's fresh 4K numerical/cache-lifetime PASS and IOMMU-off prepared **454.59 token/s** mean (**+44.12%** versus its fresh reference), passing the unchanged 440 minimum.
+- Recorded the separate patched engine candidate's fresh 4K numerical/cache-lifetime PASS and IOMMU-off prepared **454.59 token/s** mean, passing the unchanged 440 minimum.
 - Complete compared on/off payloads remained bitwise identical; candidate mean improved 5.77% over its retained 429.79 on-mode result. The cleaned pinned source passed real installer, complete installed numerical and launcher/API acceptance. Installer scripts are unchanged; only the source pin, version and qualification evidence advance from rc.1.
 
 ## 0.1.0-rc.1
